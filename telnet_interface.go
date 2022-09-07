@@ -8,6 +8,7 @@ import (
 )
 
 func Telnet_connect(site string, portNumber int) (string, error) {
+	//create a new terminal
 	var caller telnet.Caller = telnet.StandardCaller
 
 	if site == "" {
@@ -26,10 +27,39 @@ func Telnet_connect(site string, portNumber int) (string, error) {
 	//return failed connected
 }
 
-// if connected, send the string
+func Telnet_transmitString(transmition string) (string, error) {
 
-// if connected, get string
+	var incomingTransmition string = ""
+	var transmitionError error = nil
+	return incomingTransmition, transmitionError
+	//if telnet.Caller is not nil
+	//send transmition to	telnet.Caller
+	//if the tranmition does not error out, collect return string and return
+}
 
-// end connection
+func Telnet_recieveString() (string, error) {
 
-// test connection
+	var incomingTransmition string = ""
+	var transmitionError error = nil
+	return incomingTransmition, transmitionError
+	//if telnet.Caller is not nil
+	//recieveString
+	//if the string does not error, return it
+}
+
+func Telnet_endConnection(exit string) (string, error) {
+	var incomingTransmition string = ""
+	var transmitionError error = nil
+	return incomingTransmition, transmitionError
+	//if telnet.Caller is not nil
+	//send exit string and check that the connection terminates
+	//return string and close terminal
+}
+
+func Telnet_testConneciton() error { // test connection
+	var connectionError error = nil
+	return connectionError
+	//does telnet.Caller exist?
+	//if it does log
+	//if it doesn't, error
+}

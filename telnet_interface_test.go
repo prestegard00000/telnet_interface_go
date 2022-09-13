@@ -1,4 +1,4 @@
-package communications
+package telnet_interface_go
 
 import (
 	"testing"
@@ -7,13 +7,14 @@ import (
 
 // Test for empty sites
 func test_Telnet_connect(t *testing.T) {
-	var testConnection telnet_profile
-	test_site := ""
-	test_portNumber := 5555
+	testConnection := Telnet_profile{
+		site: "",
+		portNumber: 5555,
+	}
 	expected_string := "welcome"
 	expected_result := regexp.MustCompile(expected_string)
-	msg, err := testConnection.Telnet_connect(test_site, test_portNumber)
+	msg, err := testConnection.Telnet_connect()
 	if !expected_result.MatchString(msg) || err != nil {
-		t.Fatalf("Telnet_connect(%s, %d) = %q, nil", test_site, test_portNumber, msg)
+		t.Fatalf("Telnet_connect(%s, %d) = %q, nil", testConnection.site, testConnection.portNumber, msg)
 	}
 }

@@ -1,4 +1,4 @@
-package communications
+package telnet_interface_go
 
 import (
 	"errors"
@@ -6,7 +6,7 @@ import (
 	"github.com/reiver/go-telnet"
 )
 
-type telnet_profile struct {
+type Telnet_profile struct {
 	connection       telnet.Caller
 	portNumber       int
 	site             string
@@ -14,21 +14,21 @@ type telnet_profile struct {
 	connected        bool
 }
 
-func (s telnet_profile) Telnet_connect(site string, portNumber int) (string, error) {
+func (s Telnet_profile) Telnet_connect()(string, error) { //site string, portNumber int) (string, error) {
 	//create a new terminal
-	CurrentProfile  := telnet_profile{connection: telnet.StandardCaller}
-	if site == "" {
+	currentProfile  := Telnet_profile{connection: telnet.StandardCaller}
+	if currentProfile.site == "" {
 		return "", errors.New("Missing site")
 	}
 
-	if portNumber == 0 {
-		portNumber = 5555
+	if currentProfile.portNumber == 0 {
+		currentProfile.portNumber = 5555
 	}
 
-	address := fmt.Sprintf("%s:%d", site, portNumber)
+	address := fmt.Sprintf("%s:%d", currentProfile.site, currentProfile.portNumber)
 	//@TODO: replace "example.net:5555" with address you want to connect to.
 	var msg string
-	telnet.DialToAndCall(address, CurrentProfile.connection)
+	telnet.DialToAndCall(address, currentProfile.connection)
 	fmt.Println("msg: ", msg)
 	//@TODO: return the message
 	return "hello", nil
@@ -36,7 +36,7 @@ func (s telnet_profile) Telnet_connect(site string, portNumber int) (string, err
 	//return failed connected
 }
 
-func (s telnet_profile) Telnet_transmitString(transmition string) (string, error) {
+func (s Telnet_profile) Telnet_transmitString(transmition string) (string, error) {
 
 	var incomingTransmition string = ""
 	var transmitionError error = nil
@@ -46,7 +46,7 @@ func (s telnet_profile) Telnet_transmitString(transmition string) (string, error
 	//if the tranmition does not error out, collect return string and return
 }
 
-func Telnet_recieveString() (string, error) {
+func (s Telnet_profile) Telnet_recieveString() (string, error) {
 
 	var incomingTransmition string = ""
 	var transmitionError error = nil
@@ -56,7 +56,7 @@ func Telnet_recieveString() (string, error) {
 	//if the string does not error, return it
 }
 
-func Telnet_endConnection(exit string) (string, error) {
+func (s Telnet_profile) Telnet_endConnection(exit string) (string, error) {
 	var incomingTransmition string = ""
 	var transmitionError error = nil
 	return incomingTransmition, transmitionError
@@ -65,7 +65,7 @@ func Telnet_endConnection(exit string) (string, error) {
 	//return string and close terminal
 }
 
-func Telnet_testConneciton() error { // test connection
+func (s Telnet_profile) Telnet_testConneciton() error { // test connection
 	var connectionError error = nil
 	return connectionError
 	//does telnet.Caller exist?

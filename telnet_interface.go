@@ -3,14 +3,20 @@ package communications
 import (
 	"errors"
 	"fmt"
-
 	"github.com/reiver/go-telnet"
 )
 
-func Telnet_connect(site string, portNumber int) (string, error) {
-	//create a new terminal
-	var caller telnet.Caller = telnet.StandardCaller
+type telnet_profile struct {
+	connection       telnet.Caller
+	portNumber       int
+	site             string
+	transmitionError error
+	connected        bool
+}
 
+func (s telnet_profile) Telnet_connect(site string, portNumber int) (string, error) {
+	//create a new terminal
+	CurrentProfile  := telnet_profile{connection: telnet.StandardCaller}
 	if site == "" {
 		return "", errors.New("Missing site")
 	}
@@ -21,13 +27,16 @@ func Telnet_connect(site string, portNumber int) (string, error) {
 
 	address := fmt.Sprintf("%s:%d", site, portNumber)
 	//@TODO: replace "example.net:5555" with address you want to connect to.
-	telnet.DialToAndCall(address, caller)
+	var msg string
+	telnet.DialToAndCall(address, CurrentProfile.connection)
+	fmt.Println("msg: ", msg)
+	//@TODO: return the message
 	return "hello", nil
-	//return connected if no error
+	//@TODO:return connected if no error
 	//return failed connected
 }
 
-func Telnet_transmitString(transmition string) (string, error) {
+func (s telnet_profile) Telnet_transmitString(transmition string) (string, error) {
 
 	var incomingTransmition string = ""
 	var transmitionError error = nil

@@ -7,11 +7,11 @@ import (
 )
 
 type Telnet_profile struct {
-	connection       telnet.Caller
-	portNumber       int
-	site             string
-	transmitionError error
-	connected        bool
+	Connection       telnet.Caller
+	PortNumber       int
+	Site             string
+	TransmitionError error
+	Connected        bool
 }
 
 func (s Telnet_profile) Telnet_connect()(string, error) { //site string, portNumber int) (string, error) {
@@ -21,14 +21,14 @@ func (s Telnet_profile) Telnet_connect()(string, error) { //site string, portNum
 		return "", errors.New("Missing site")
 	}
 
-	if currentProfile.portNumber == 0 {
-		currentProfile.portNumber = 5555
+	if currentProfile.PortNumber == 0 {
+		currentProfile.PortNumber = 5555
 	}
 
 	address := fmt.Sprintf("%s:%d", currentProfile.site, currentProfile.portNumber)
 	//@TODO: replace "example.net:5555" with address you want to connect to.
 	var msg string
-	telnet.DialToAndCall(address, currentProfile.connection)
+	telnet.DialToAndCall(address, currentProfile.Connection)
 	fmt.Println("msg: ", msg)
 	//@TODO: return the message
 	return "hello", nil

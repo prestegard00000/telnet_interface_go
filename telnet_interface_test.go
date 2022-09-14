@@ -8,14 +8,14 @@ import (
 // Test for empty sites
 func test_Telnet_connect(t *testing.T) {
 	testConnection := Telnet_profile{
-		site: "",
-		portNumber: 5555,
+		Site: "",
+		PortNumber: 5555,
 	}
 	expected_string := "welcome"
 	expected_result := regexp.MustCompile(expected_string)
 	msg, err := testConnection.Telnet_connect()
 	if !expected_result.MatchString(msg) || err != nil {
-		t.Fatalf("Telnet_connect(%s, %d) = %q, nil", testConnection.site, testConnection.portNumber, msg)
+		t.Fatalf("Telnet_connect(%s, %d) = %q, nil", testConnection.Site, testConnection.PortNumber, msg)
 	}
 }
 
@@ -28,6 +28,6 @@ func test_Telnet_trasmitString(t *testing.T) {
 	expected_result := regexp.MustCompile(expected_string)
 	msg,err := testConnection.Telnet_connect()
 	if !expected_result.MatchString(msg) || err !=nil {
-		t.Fatalf("Telnet_connect(%s, %d) = %q, nil", testConnection.site, testConnection.portNumber, msg)
+		t.Fatalf("Telnet_connect(%s, %d) = %q, nil", testConnection.Site, testConnection.PortNumber, msg)
 	}
 }

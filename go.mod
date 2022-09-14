@@ -1,4 +1,4 @@
-module github.com/aprestegard/telnet_interface_go
+module github.com/prestegard00000/telnet_interface_go
 
 go 1.18
 

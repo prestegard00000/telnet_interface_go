@@ -5,7 +5,7 @@ import (
 	"regexp"
 )
 
-// Test for empty sites
+// Test for empty Sites
 func test_Telnet_connect(t *testing.T) {
 	testConnection := Telnet_profile{
 		Site: "",
@@ -21,8 +21,8 @@ func test_Telnet_connect(t *testing.T) {
 
 func test_Telnet_trasmitString(t *testing.T) {
 	testConnection := Telnet_profile {
-		site: "horizons.jpl.nasa.gov",
-		portNumber: 6775,
+		Site: "horizons.jpl.nasa.gov",
+		PortNumber: 6775,
 	}
 	expected_string := "nasa"
 	expected_result := regexp.MustCompile(expected_string)

@@ -16,8 +16,8 @@ type Telnet_profile struct {
 
 func (s Telnet_profile) Telnet_connect()(string, error) { //site string, portNumber int) (string, error) {
 	//create a new terminal
-	currentProfile  := Telnet_profile{connection: telnet.StandardCaller}
-	if currentProfile.site == "" {
+	currentProfile  := Telnet_profile{Connection: telnet.StandardCaller}
+	if currentProfile.Site == "" {
 		return "", errors.New("Missing site")
 	}
 
@@ -25,7 +25,7 @@ func (s Telnet_profile) Telnet_connect()(string, error) { //site string, portNum
 		currentProfile.PortNumber = 5555
 	}
 
-	address := fmt.Sprintf("%s:%d", currentProfile.site, currentProfile.portNumber)
+	address := fmt.Sprintf("%s:%d", currentProfile.Site, currentProfile.PortNumber)
 	//@TODO: replace "example.net:5555" with address you want to connect to.
 	var msg string
 	telnet.DialToAndCall(address, currentProfile.Connection)

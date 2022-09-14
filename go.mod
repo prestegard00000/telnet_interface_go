@@ -1,4 +1,4 @@
-module example.com/telnet_go
+module github.com/aprestegard/telnet_interface_go
 
 go 1.18
 

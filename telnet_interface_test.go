@@ -18,3 +18,16 @@ func test_Telnet_connect(t *testing.T) {
 		t.Fatalf("Telnet_connect(%s, %d) = %q, nil", testConnection.site, testConnection.portNumber, msg)
 	}
 }
+
+func test_Telnet_trasmitString(t *testing.T) {
+	testConnection := Telnet_profile {
+		site: "horizons.jpl.nasa.gov",
+		portNumber: 6775,
+	}
+	expected_string := "nasa"
+	expected_result := regexp.MustCompile(expected_string)
+	msg,err := testConnection.Telnet_connect()
+	if !expected_result.MatchString(msg) || err !=nil {
+		t.Fatalf("Telnet_connect(%s, %d) = %q, nil", testConnection.site, testConnection.portNumber, msg)
+	}
+}

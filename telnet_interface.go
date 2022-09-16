@@ -12,11 +12,19 @@ type Telnet_profile struct {
 	Site             string
 	TransmitionError error
 	Connected        bool
+	Connect		 *telnet.Conn
+	//TransmitConn	telnet.Conn                                                                                                                                                                   	
+	TransmitTo	telnet.Writer
+	TransmitFrom	telnet.Reader
+	TransmitContext telnet.Context
 }
 
-func (s Telnet_profile) Telnet_connect()(string, error) { //site string, portNumber int) (string, error) {
+func (s Telnet_profile) Telnet_connect()(string,error) { //site string, portNumber int) (string, error)
+	//@ToDo: change this method to setupProfile and split out the actual calling method
+	//@ToDo: clean up
 	//create a new terminal
-	s.Connection = telnet.StandardCaller
+	//currentProfile := Telnet_profile{connection: telnet.StandardCaller}
+	//s.Connection.CallTELNET(s.TransmitContext, s.TransmitTo, s.TransmitFrom)
 	
 	//if currentProfile.Site == "" {
 	if s.Site == "" {
@@ -29,14 +37,11 @@ func (s Telnet_profile) Telnet_connect()(string, error) { //site string, portNum
 	}
 
 	address := fmt.Sprintf("%s:%d", s.Site, s.PortNumber)
-	//@TODO: replace "example.net:5555" with address you want to connect to.
-	var msg string
-	telnet.DialToAndCall(address, s.Connection)
-	fmt.Println("msg: ", msg)
+	s.Connect, s.TransmitionError = telnet.DialTo(address) // s.Connection)
+	//fmt.Println("msg: ", msg)
 	//@TODO: return the message
-	return "hello", nil
+	return address, s.TransmitionError
 	//@TODO:return connected if no error
-	//return failed connected
 }
 
 func (s Telnet_profile) Telnet_transmitString(transmition string) (string, error) {
@@ -51,8 +56,13 @@ func (s Telnet_profile) Telnet_transmitString(transmition string) (string, error
 
 func (s Telnet_profile) Telnet_recieveString() (string, error) {
 
+	var p []byte
+	var count int
 	var incomingTransmition string = ""
+	count, s.TransmitionError = s.Connect.Read(p)
 	var transmitionError error = nil
+	fmt.Print(count)
+	fmt.Print(p)
 	return incomingTransmition, transmitionError
 	//if telnet.Caller is not nil
 	//recieveString
